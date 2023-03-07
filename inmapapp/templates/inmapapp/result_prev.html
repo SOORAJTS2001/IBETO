@@ -1,0 +1,113 @@
+{% load crispy_forms_tags %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="Description" content="Enter your description here" />
+    <title>Result</title>
+
+    <!-- Font Collection -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+      rel="stylesheet"
+    />
+    <!-- font style tags -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body style="background-image: 'background.png';
+  background-attachment: fixed;
+  background-size: cover;">
+    <div class="container-sm">
+      <nav
+        class="navbar bg-light main-heading"
+        style="font-family: 'Fredoka One', cursive"
+      >
+        <div class="container-fluid justify-content-center">
+          <span class="navbar-brand mb-0 h1" style="font-size: 50px"
+            >inmap</span
+          >
+        </div>
+      </nav>
+      {%if floor1%}
+      <img src="{%static 'inmapapp/modfloor1.png' %}" class="img-fluid" alt="...">
+      {%endif%}
+      {%if floor2%}
+      <img src="{%static 'inmapapp/modfloor2.png' %}" class="img-fluid" alt="...">
+      {%endif%}
+      <h4>Result in {{time}}</h4>
+      
+
+
+<hr />
+
+        <div class="qr-heading text-center qr-form2 col-lg-5 mx-auto d-grid gap-3">
+          <h3
+            class="justify-content-center"
+            style="font-family: 'Dancing Script', cursive; font-size: 30px"
+          >
+            can't scan enter manually !
+          </h3>
+          <button type="submit" class="btn btn-primary text-capitalize" style="font-weight:bold">Re-Scan</button>
+
+        </div>
+
+
+
+    </div>
+  </body>
+  <footer class="container py-5 footer text bg-light ">
+    <div class="row ">
+        <div class="col-12 col-md-4 ">
+            <small class="d-block mb-3  "><span class="preview-display " style="font-family: 'Poppins', sans-serif; font-size:22px ">epoch</span>
+                <span class="preview-display " style="font-family: 'Montserrat', sans-serif; font-size:22px ">zero</span></small>
+        </div>
+
+        <div class="col-6 col-md-3 ">
+            <h5>Pages</h5>
+            <ul class=" list-unstyled text-small ">
+                <li><a class="text-muted " href="index.html"> Home </a></li>
+                <li><a class="text-muted " href="projects.html">Key Projects</a></li>
+                <li><a class="text-muted " href="career.html">Careers</a></li>
+                <li><a class="text-muted " href="testimonial.html">Client Reviews</a></li>
+                <li><a class="text-muted " href="aboutus.html">About Us</a></li>
+            </ul>
+        </div>
+
+        <div class="col-6 col-md-4 ">
+            <h5>Contact US</h5>
+            <ul class="list-unstyled text-small ">
+                <li><a class="text-muted " href="# ">epoch zero</a></li>
+                <li><a class="text-muted " href="# ">Los Angels,California 65/911</a></li>
+                <li><a class="text-muted " href="# "><i class="fas fa-envelope"></i>  epochzero@gmail.com</a></li>
+                <li><a class="text-muted " href="# ">social media</a></li>
+            </ul>
+
+        </div>
+        <div id="social">
+            <a class="facebookBtn smGlobalBtn" href="#"> <i class="fa fa-facebook"></i></a>
+            <a class="twitterBtn smGlobalBtn" href="#"><i class="fa fa-twitter"></i></a>
+            <a class="googleplusBtn smGlobalBtn" href="#"><i class="fa fa-instagram"></i></a>
+            <a class="linkedinBtn smGlobalBtn" href="#"><i class="fa fa-linkedin"></i></a>
+
+        </div>
+    </div>
+</footer>
+  

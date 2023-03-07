@@ -1,0 +1,71 @@
+{% load crispy_forms_tags %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="Description" content="Enter your description here" />
+    <title>Result</title>
+
+    <!-- Font Collection -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap"
+      rel="stylesheet"
+    />
+    <!-- font style tags -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container-sm">
+      <nav
+        class="navbar bg-light main-heading"
+        style="font-family: 'Fredoka One', cursive"
+      >
+        <div class="container-fluid justify-content-center">
+          <span class="navbar-brand mb-0 h1" style="font-size: 50px"
+            >inmap</span
+          >
+        </div>
+      </nav>
+      {%if update%}
+      <img src="modfloor1.png" class="img-fluid" alt="...">
+      <img src="modfloor2.png" class="img-fluid" alt="...">
+      {%else%}
+      <img src="result.png" class="img-fluid" alt="...">
+{%endif%}
+
+<hr />
+
+        <div class="qr-heading text-center qr-form2 col-lg-5 mx-auto d-grid gap-3">
+          <h3
+            class="justify-content-center"
+            style="font-family: 'Dancing Script', cursive; font-size: 30px"
+          >
+            can't scan enter manually !
+          </h3>
+          <button type="submit" class="btn btn-primary text-capitalize" style="font-weight:bold">Re-Scan</button>
+
+        </div>
+
+
+
+    </div>
+  </body>
+</html>
