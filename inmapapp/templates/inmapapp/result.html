@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <meta name="Description" content="Enter your description here" />
   <title>Indoor mapping</title>
-
+  <script src="https://kit.fontawesome.com/13949e12af.js" crossorigin="anonymous"></script>
   <!-- Font Collection -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
   <!-- font style tags -->
@@ -23,6 +23,16 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script>
+      
+      {% comment %} this is for the result generated time section it uses jquery {% endcomment %}
+      $(window).scroll(function() {
+        var windowBottom = $(this).scrollTop() + $(this).innerHeight();
+        var elementTop = $('#fade-in-div').offset().top;
+        if (elementTop < windowBottom) {
+          $('#fade-in-div').css('opacity', '1');
+        }
+      });
+      {% comment %} this is used for switching floor section {% endcomment %}
       function switchFloor(){
         const o1=document.getElementById('overlay1');
         const o2=document.getElementById('overlay2');
@@ -43,7 +53,7 @@
     }
     </script>
 </head>
-<body">
+<body>
   <div class="container-sm">
     <nav class="navbar bg-light main-heading" style="font-family: 'Fredoka One', cursive">
       <div class="container-fluid justify-content-center">
@@ -59,7 +69,7 @@
       <div class="img-wrapper" id="overlay1" style="left:0%;">
         
         <div class="img-wrapper-overlay"></div>
-        <img src="{%static 'inmapapp/modfloor1.png' %}" class="img-fluid" alt="...">
+        <img id="rotate-img" src="{%static 'inmapapp/modfloor1.png' %}" class="img-fluid" alt="...">
         <div class="border border-primary rounded p-2">floor1</div>
        
       </div>
@@ -71,7 +81,7 @@
         
         <div class="img-wrapper-overlay"></div>
 
-        <img src="{%static 'inmapapp/modfloor2.png' %}" class="img-fluid" alt="...">
+        <img id="rotate-img" src="{%static 'inmapapp/modfloor2.png' %}" class="img-fluid" alt="...">
         <div class="border border-primary rounded p-2">floor2</div>
       </div>
       
@@ -82,7 +92,7 @@
     <div class="img-wrapper" id="overlay1" style="left:0%;">
         
       <div class="img-wrapper-overlay"></div>
-      <img src="{%static 'inmapapp/modfloor1.png' %}" class="img-fluid" alt="...">
+      <img id="rotate-img" src="{%static 'inmapapp/modfloor1.png' %}" class="img-fluid" alt="...">
       <br>
       <div class="border border-primary rounded p-2">floor1</div>
 
@@ -91,42 +101,43 @@
         
       <div class="img-wrapper-overlay"></div>
 
-      <img src="{%static 'inmapapp/modfloor2.png' %}" class="img-fluid" alt="...">
+        <img id="rotate-img" src="{%static 'inmapapp/modfloor2.png' %}" class="img-fluid" alt="...">
 <div class="border border-primary rounded p-2">floor2</div>
     </div>
     </div>
     <button class="btn btn-grad ms-auto" onclick="switchFloor()">switch</button>
     {%endif%}
-    
-
-    
-    
-
-    
-    
-    
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-sm-6 col-md-4 text-center">
           <i style="color:blue;"class="fas fa-walking fa-2x mb-3 blue-icon animated walking"></i>
           <h4>Walkable Distance</h4>
-          <p class="lead mb-5">{{solution_meters}}m or {{solution_feet}}ft</p>
+          <p class="lead mb-5">{{solution_meters}}m or {{solution_feet}} steps</p>
         </div>
         <div class="col-sm-6 col-md-4 text-center">
           <i style="color:blue;" class="far fa-clock fa-2x mb-3 blue-icon animated ticking"></i>
           <h4>Time Taken</h4>
           <p class="lead mb-5">{{solution_time}} seconds</p>
         </div>
+        {%if stairs%}
+        <div class="col-sm-6 col-md-4 text-center">
+          <i style="color:blue;" class="fa-solid fa-stairs fa-2x mb-3 blue-icon"></i>
+          <h4>stairs ahead!</h4>
+        {%endif%}
       </div>
     </div>
-   
-    
-
-
-    <hr />
-    <h4>Result in {{time}}s</h4>
-    <hr />
-       
+    <br>
+    <br>
+    <div id="fade-in-div" class="card text-white bg-info mb-3 mx-auto" style="max-width: 18rem;">
+      <div class="card-header">Result Generated in {{time}}s</div>
+      </div>
+    </div>
+    <br>
+    <br>
     <div class="qr-heading text-center qr-form2 col-lg-5 mx-auto d-grid gap-3">
       <h3 class="justify-content-center" style="font-family: 'Dancing Script', cursive; font-size: 30px">
         feels lost? Rescan to update!
@@ -175,6 +186,37 @@
         </div> -->
     </div>
   </footer>
+  <script>
+    var rotateImg = document.getElementById('rotate-img');
+var startAngle = 0;
+var currentAngle = 0;
+
+rotateImg.addEventListener('mousedown', function(e) {
+  e.preventDefault();
+  startAngle = getAngle(e.clientX, e.clientY);
+  document.addEventListener('mousemove', rotateImage);
+});
+
+document.addEventListener('mouseup', function() {
+  document.removeEventListener('mousemove', rotateImage);
+});
+
+function rotateImage(e) {
+  e.preventDefault();
+  currentAngle = getAngle(e.clientX, e.clientY);
+  rotateImg.style.transform = 'rotate(' + (currentAngle - startAngle) + 'deg)';
+}
+
+function getAngle(x, y) {
+  var rect = rotateImg.getBoundingClientRect();
+  var centerX = rect.left + rect.width / 2;
+  var centerY = rect.top + rect.height / 2;
+  var radians = Math.atan2(y - centerY, x - centerX);
+  return radians * 180 / Math.PI;
+}
+
+
+  </script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
  
 

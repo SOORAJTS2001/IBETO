@@ -36,7 +36,13 @@ def index(request):
         else:
             From = FromMan
             To = ToMan
-        if From in floor1checkpoint and To in floor1checkpoint:
+        if From==To:
+            print("same destination and location")
+            return redirect('index')
+        elif From == "stairexit-1st-floor" or From=="stairexit-2nd-floor" or To=="stairentry-1st-floor" or To=="stairentry-2nd-floor":
+            print("staircase entry and exit error")
+            return redirect('index')
+        elif From in floor1checkpoint and To in floor1checkpoint:
             From_x,From_y = floor1checkpoint[From]
             To_x,To_y = floor1checkpoint[To]
             m = Maze(os.path.abspath('inmapapp/static/inmapapp/floor1.txt'),From_x,From_y,To_x,To_y,"floor1.png")
@@ -49,42 +55,64 @@ def index(request):
             print(solution_meters,solution_feet,solution_time)
             floor1 = True
             floor2 = False
-            
-            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':round(time.time()-then,3),'update':True,'solution_meters':solution_meters,'solution_feet':solution_feet,'solution_time':solution_time})
-        if From in floor2checkpoint and To in floor2checkpoint:
+            stairs = False
+            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':round(time.time()-then,3),'update':True,'solution_meters':solution_meters,'solution_feet':solution_feet,'solution_time':solution_time,'stairs':stairs})
+        elif From in floor2checkpoint and To in floor2checkpoint:
             From_x,From_y = floor2checkpoint[From]
             To_x,To_y = floor2checkpoint[To]
             m = Maze(os.path.abspath('inmapapp/static/inmapapp/floor2.txt'),From_x,From_y,To_x,To_y,"floor2.png")
             m.solve()
-            m.output_image()
+            solution_meters = round(m.output_image()*avg_perpix)
+            solution_time = round(solution_meters*1.2)
+            solution_feet = round(solution_meters*1.3)
+            # print(m.output_image())
+            print(avg_perpix)
+            print(solution_meters,solution_feet,solution_time)
             floor1=False
             floor2 = True
-            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':time.time()-then,'update':True})
-        if From in floor1checkpoint and To in floor2checkpoint:
+            stairs = False
+            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':round(time.time()-then,3),'update':True,'solution_meters':solution_meters,'solution_feet':solution_feet,'solution_time':solution_time,'stairs':stairs})
+        elif From in floor1checkpoint and To in floor2checkpoint:
             print("from floor1 and to floor2")
             From_x,From_y = floor1checkpoint[From]
             To_x,To_y = floor2checkpoint[To]
             m = Maze(os.path.abspath('inmapapp/static/inmapapp/floor1.txt'),From_x,From_y,106,53,"floor1.png")
             m.solve()
-            m.output_image()
+            solution_meters_floor1 = round(m.output_image()*avg_perpix)
+            solution_time_floor1 = round(solution_meters_floor1*1.2)
+            solution_feet_floor1 = round(solution_meters_floor1*1.3)
             n = Maze(os.path.abspath('inmapapp/static/inmapapp/floor2.txt'),143,45,To_x,To_y,"floor2.png")
             n.solve()
-            n.output_image()
+            solution_meters_floor2 = round(n.output_image()*avg_perpix)
+            solution_time_floor2 = round(solution_meters_floor2*1.2)
+            solution_feet_floor2 = round(solution_meters_floor2*1.3)
+            solution_meters = solution_meters_floor1+solution_meters_floor2
+            solution_time = solution_time_floor1+solution_time_floor2
+            solution_feet = solution_feet_floor1+solution_feet_floor2
             floor1=True
             floor2=True
-            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':time.time()-then,'update':True})
-        if From in floor2checkpoint and To in floor1checkpoint:
+            stairs = True
+            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':round(time.time()-then,3),'update':True,'solution_meters':solution_meters,'solution_feet':solution_feet,'solution_time':solution_time,'stairs':stairs})
+        elif From in floor2checkpoint and To in floor1checkpoint:
             From_x,From_y = floor2checkpoint[From]
             To_x,To_y = floor1checkpoint[To]
             m = Maze(os.path.abspath('inmapapp/static/inmapapp/floor2.txt'),From_x,From_y,142,51,"floor2.png")
             m.solve()
-            m.output_image()
+            solution_meters_floor1 = round(m.output_image()*avg_perpix)
+            solution_time_floor1 = round(solution_meters_floor1*1.2)
+            solution_feet_floor1 = round(solution_meters_floor1*1.3)
             n = Maze(os.path.abspath('inmapapp/static/inmapapp/floor1.txt'),106,45,To_x,To_y,"floor1.png")
             n.solve()
-            n.output_image()
+            solution_meters_floor2 = round(n.output_image()*avg_perpix)
+            solution_time_floor2 = round(solution_meters_floor2*1.2)
+            solution_feet_floor2 = round(solution_meters_floor2*1.3)
+            solution_meters = solution_meters_floor1+solution_meters_floor2
+            solution_time = solution_time_floor1+solution_time_floor2
+            solution_feet = solution_feet_floor1+solution_feet_floor2
             floor1=True
             floor2=True
-            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':time.time()-then,'update':True})
+            stairs = True
+            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':round(time.time()-then,3),'update':True,'solution_meters':solution_meters,'solution_feet':solution_feet,'solution_time':solution_time,'stairs':stairs})
             # print(From_x,From_y,To_x,To_y)
             
             # /home/sooraj/Documents/PROJECTS/INMAPWEB/inmapproject/inmapapp/static/inmapapp/map.txt
@@ -106,7 +134,7 @@ def result(request):
 def sample(request):
     ans=""
     for sol in sols:
-        ans+=f'''<div style="width:10px;height:10px;border:5px solid black;position: absolute;top: {sol[1]*4.2}px;left: {sol[0]*4.7}px;"> </div>'''
+        ans+=f'''<diexitv style="width:10px;height:10px;border:5px solid black;position: absolute;top: {sol[1]*4.2}px;left: {sol[0]*4.7}px;"> </diexitv>'''
     return render(request,'inmapapp/sample.html',{"data":ans})
 def test(request):
     From = request.POST.get('fromLocation')
