@@ -249,26 +249,23 @@ class Maze():
                 
                 
         # print(f"for image{self.imagename}")
-        print(checkpointlist)
+        # print(checkpointlist)
         for checkpoints in checkpointlist:    
             for points in floor1:
                 x_distance = abs(checkpoints[1]-points[0])
                 y_distance = abs(checkpoints[0]-points[1])
                 if x_distance<=2 and y_distance<=2:
-                    print(f"checkpoint{checkpoints} is near to point{points} of floor1")
+                    # print(f"checkpoint{checkpoints} is near to point{points} of floor1")
                     cv.circle(base_img,(round(checkpoints[1]*4.2),round(checkpoints[0]*4.7)),1,(0,0,255),5)       
             for points in floor2:
                 x_distance = abs(checkpoints[1]-points[0])
                 y_distance = abs(checkpoints[0]-points[1])
                 if x_distance<=2 and y_distance<=2:
-                    print(f"checkpoint{checkpoints} is near to point{points} of floor2")
+                    # print(f"checkpoint{checkpoints} is near to point{points} of floor2")
                     cv.circle(base_img,(round(checkpoints[1]*4.2),round(checkpoints[0]*4.7)),1,(0,0,255),5)
-        print(self.solution)
-                    
-
-
-
         cv.imwrite(os.path.abspath(f'inmapapp/static/inmapapp/mod{self.imagename}'),base_img)
+        # print(self.solution[1])
+        return len(self.solution[1])
 
 
         # img.save(filename)

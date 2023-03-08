@@ -21,6 +21,10 @@ def index(request):
         return render(request,'inmapapp/index.html',{'image':"inmapapp/MAP.png",'time':'','update':False,'to_position':to_position,'from_position':from_position})    
     else:
         then = time.time()
+        avg_length_perpix = (23/738)
+        avg_breadth_perpix = (10/336)
+        apparent_shift = ((465/100)+(826/200))/2
+        avg_perpix = ((avg_length_perpix+avg_breadth_perpix)/2)*apparent_shift
         FromAuto = request.POST.get('fromLocation')
         ToAuto = request.POST.get('To')
         print(FromAuto,ToAuto)
@@ -37,11 +41,16 @@ def index(request):
             To_x,To_y = floor1checkpoint[To]
             m = Maze(os.path.abspath('inmapapp/static/inmapapp/floor1.txt'),From_x,From_y,To_x,To_y,"floor1.png")
             m.solve()
-            m.output_image()
+            solution_meters = round(m.output_image()*avg_perpix)
+            solution_time = round(solution_meters*1.2)
+            solution_feet = round(solution_meters*1.3)
+            # print(m.output_image())
+            print(avg_perpix)
+            print(solution_meters,solution_feet,solution_time)
             floor1 = True
             floor2 = False
             
-            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':time.time()-then,'update':True})
+            return render(request,'inmapapp/result.html',{'floor1':floor1,'floor2':floor2,'time':round(time.time()-then,3),'update':True,'solution_meters':solution_meters,'solution_feet':solution_feet,'solution_time':solution_time})
         if From in floor2checkpoint and To in floor2checkpoint:
             From_x,From_y = floor2checkpoint[From]
             To_x,To_y = floor2checkpoint[To]

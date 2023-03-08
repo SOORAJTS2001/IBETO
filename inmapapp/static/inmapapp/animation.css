@@ -1,0 +1,40 @@
+.blue-icon {
+    color: blue;
+  }
+  
+  .animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+  }
+  
+  .walking {
+    animation-name: walk;
+  }
+  
+  @keyframes walk {
+    0% {
+      transform: translateX(0) scaleX(1);
+    }
+    25% {
+      transform: translateX(20px) scaleX(1.2);
+    }
+    50% {
+      transform: translateX(40px) scaleX(1);
+    }
+    75% {
+      transform: translateX(20px) scaleX(0.8);
+    }
+    100% {
+      transform: translateX(0) scaleX(1);
+    }
+  }
+  .ticking {
+    animation-name: tick;
+  }
+  
+  @keyframes tick {
+    50% {
+      transform: scale(1.2);
+    }
+  }

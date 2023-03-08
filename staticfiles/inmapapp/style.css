@@ -8,6 +8,7 @@ body{
 overflow-x:hidden;
 
 }
+
 /* QR code reader window dimensions */
 #preview {
   width: 400px;
@@ -234,11 +235,13 @@ overflow:hidden;
 #overlay1,#overlay2{
 height:100vh;
 display:flex;
+
 justify-content:center;
 align-items:center;
 position:absolute;
 width:100%;
 transform: all;
+flex-direction:column;
 transition-duration:0.6s;
 
 }
