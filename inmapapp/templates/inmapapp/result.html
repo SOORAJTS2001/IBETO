@@ -187,33 +187,7 @@
     </div>
   </footer>
   <script>
-    var rotateImg = document.getElementById('rotate-img');
-var startAngle = 0;
-var currentAngle = 0;
-
-rotateImg.addEventListener('mousedown', function(e) {
-  e.preventDefault();
-  startAngle = getAngle(e.clientX, e.clientY);
-  document.addEventListener('mousemove', rotateImage);
-});
-
-document.addEventListener('mouseup', function() {
-  document.removeEventListener('mousemove', rotateImage);
-});
-
-function rotateImage(e) {
-  e.preventDefault();
-  currentAngle = getAngle(e.clientX, e.clientY);
-  rotateImg.style.transform = 'rotate(' + (currentAngle - startAngle) + 'deg)';
-}
-
-function getAngle(x, y) {
-  var rect = rotateImg.getBoundingClientRect();
-  var centerX = rect.left + rect.width / 2;
-  var centerY = rect.top + rect.height / 2;
-  var radians = Math.atan2(y - centerY, x - centerX);
-  return radians * 180 / Math.PI;
-}
+    
 
 
   </script>
